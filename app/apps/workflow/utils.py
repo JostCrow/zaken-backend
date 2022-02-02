@@ -8,7 +8,7 @@ import os
 from deepdiff import DeepDiff
 from django.conf import settings
 from prettyprinter import pprint
-from SpiffWorkflow.bpmn.BpmnScriptEngine import BpmnScriptEngine
+from SpiffWorkflow.bpmn.PythonScriptEngine import PythonScriptEngine
 from SpiffWorkflow.bpmn.serializer.BpmnSerializer import BpmnSerializer
 from SpiffWorkflow.bpmn.specs.BoundaryEvent import BoundaryEvent
 from SpiffWorkflow.bpmn.specs.event_definitions import TimerEventDefinition
@@ -499,7 +499,7 @@ def ff_workflow(
     timer_event_task_start_times={},
     message_name=None,
 ):
-    script_engine = BpmnScriptEngine(
+    script_engine = PythonScriptEngine(
         scriptingAdditions={
             "set_status": lambda *args: None,
             "wait_for_workflows_and_send_message": lambda *args: None,
@@ -594,7 +594,7 @@ def ff_workflow(
 
 
 def ff_to_subworkflow(subworkflow, spec, message_name, data):
-    script_engine = BpmnScriptEngine(
+    script_engine = PythonScriptEngine(
         scriptingAdditions={
             "set_status": lambda *args: None,
             "wait_for_workflows_and_send_message": lambda *args: None,
@@ -670,7 +670,7 @@ def workflow_health_check(workflow_spec, data, expected_user_task_names):
     def wait_for_workflows_and_send_message(message):
         logger.info(f"wait_for_workflows_and_send_message: {message}")
 
-    script_engine = BpmnScriptEngine(
+    script_engine = PythonScriptEngine(
         scriptingAdditions={
             "set_status": set_status,
             "wait_for_workflows_and_send_message": wait_for_workflows_and_send_message,
@@ -994,7 +994,7 @@ def workflow_spec_paths_inspect(workflow_spec_conf):
     def parse_duration_string(duration_str):
         pass
 
-    script_engine = BpmnScriptEngine(
+    script_engine = PythonScriptEngine(
         scriptingAdditions={
             "set_status": set_status,
             "wait_for_workflows_and_send_message": wait_for_workflows_and_send_message,
